@@ -1,0 +1,11 @@
+FROM python:3.7-stretch
+
+WORKDIR /usr/src/app
+RUN useradd uwsgi
+RUN pip install uWSGI==2.0.17.1
+COPY . .
+RUN python setup.py install
+
+CMD ["uwsgi", "--uid", "uwsgi", "--gid", "uwsgi", "--http", ":9000",  "--master", "--processes", "4", "--threads", "2", "--wsgi-file", "/usr/src/app/examples/hello_world/app.py"]
+
+

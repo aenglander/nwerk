@@ -48,3 +48,50 @@ Install tox via [pipenv](https://pipenv.readthedocs.io/en/latest/)::
 Run tests::
 
     tox
+
+## Example Applications
+
+All example applications are in the examples directory of the source code.
+
+### Docker
+
+All of these examples are ready to be run with [docker](https://www.docker.com/)
+in either [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) or
+[gunicorn](http://docs.gunicorn.org/en/latest/index.html).
+
+When building images, make sure you start from the root of the project to ensure
+the commands execute properly. The entire project needs to be copied into the
+container and built to install the dependencies as required.
+
+### Hello World
+
+The Hello World example can be built with either:
+
+#### uWSGI
+
+```bash
+docker build -t nwerk-hello-world:uWSGI -f examples/hello_world/Dockerfile_uWSGI .
+```
+
+#### gunicorn
+
+```bash
+docker build -t nwerk-hello-world:unicorn -f examples/hello_world/Dockerfile_gunicorn .
+```
+
+And then run:
+
+#### uWSGI
+
+```bash
+docker run -it -p9000:9000 nwerk-hello-world:uWSGI
+```
+
+#### gunicorn
+
+```bash
+docker run -it -p9000:9000 nwerk-hello-world:gunicorn
+```
+
+Once a container is up and running, access the server via
+`http://localhost:9000/` in cURL or your browser.
